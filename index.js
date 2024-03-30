@@ -1,7 +1,5 @@
 import WebSocket, { WebSocketServer } from "ws";
 
-import uuid from "node-uuid";
-
 const wss = new WebSocketServer({
   port: 8080,
 });
@@ -14,12 +12,6 @@ wss.on("connection", function (ws) {
     wsConnected.add(ws);
 
   ws.on("close", function () {
-    for (var i = 0; i < clients.length; i++) {
-      if (clients[i].id == client_uuid) {
-        console.log("client [%s] disconnected", client_uuid);
-        clients.splice(i, 1);
-      }
-    }
   });
 });
 
@@ -27,6 +19,8 @@ wss.on("connection", function (ws) {
 var timeInSecs = 120;
 var ticker;
 var random = 123123123;
+var historyLastNumber = [];
+
 
 function startTimer(secs) {
   timeInSecs = parseInt(secs);
@@ -36,14 +30,31 @@ function startTimer(secs) {
 async function tick() {
     
   var secs = timeInSecs;
-  if (secs == 15) {
+  if (secs == 2) {
     random = Math.floor(Math.random() * 1000000000);
+
+    let split = String(random).split("");
+    let sumSplitRandom = 0;
+         
+    for (let i of split) {
+        sumSplitRandom += parseInt(i);
+    }
+
+    let lastNumber = sumSplitRandom % 10;
+    if (historyLastNumber.length >= 13) {
+        historyLastNumber.shift();
+        historyLastNumber.push(lastNumber);
+    } else {
+
+        historyLastNumber.push(lastNumber);
+    }
+
   }
   if (secs > 0) {
     timeInSecs--;
   } else {
     clearInterval(ticker);
-    startTimer(16); // 4 minutes in seconds
+    startTimer(2*60); // 4 minutes in seconds
   }
 
   var mins = Math.floor(secs / 60);
@@ -54,8 +65,8 @@ async function tick() {
   data["second"] = pretty;
   data["random"] = random;
     wsConnected.forEach(ws => 
-        ws.send(JSON.stringify([pretty, random]))
+        ws.send(JSON.stringify([pretty, random, historyLastNumber]))
     )
 
 }
-startTimer(16);
+startTimer(2*60);
