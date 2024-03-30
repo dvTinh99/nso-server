@@ -1,54 +1,61 @@
-import express from 'express';
-let app = express();
-let port = process.env.PORT || 3000;
+import WebSocket, { WebSocketServer } from "ws";
 
-import firebase from './firebase.js';
-import { getFirestore, serverTimestamp, collection, getDoc, doc, updateDoc } from 'firebase/firestore';
+import uuid from "node-uuid";
 
-app.listen(port);
+const wss = new WebSocketServer({
+  port: 8080,
+});
 
-const db = getFirestore();
 
-// setInterval(countDown, 1000);
+const wsConnected = new Set();
+
+wss.on("connection", function (ws) {
+
+    wsConnected.add(ws);
+
+  ws.on("close", function () {
+    for (var i = 0; i < clients.length; i++) {
+      if (clients[i].id == client_uuid) {
+        console.log("client [%s] disconnected", client_uuid);
+        clients.splice(i, 1);
+      }
+    }
+  });
+});
+
+
 var timeInSecs = 120;
 var ticker;
+var random = 123123123;
 
 function startTimer(secs) {
+  timeInSecs = parseInt(secs);
+  ticker = setInterval(tick, 1000);
+}
 
+async function tick() {
     
-    timeInSecs = parseInt(secs);
-    ticker = setInterval(tick, 1000); 
-}
-
-async function tick( ) {
-    var secs = timeInSecs;
-    if (secs == 15) {
-        const random = doc(db, "second", "second");
-
-        await updateDoc(random, {
-            random: String(Math.floor(Math.random() * 1000000000) + 1)
-        });
-        
-    }
-    if (secs > 0) {
-    timeInSecs--; 
-} else {
+  var secs = timeInSecs;
+  if (secs == 15) {
+    random = Math.floor(Math.random() * 1000000000);
+  }
+  if (secs > 0) {
+    timeInSecs--;
+  } else {
     clearInterval(ticker);
-    // startTimer(16); // 4 minutes in seconds
+    startTimer(16); // 4 minutes in seconds
+  }
+
+  var mins = Math.floor(secs / 60);
+  secs %= 60;
+  var pretty = (mins < 10 ? "0" : "") + mins + ":" + (secs < 10 ? "0" : "") + secs;
+
+  let data = [];
+  data["second"] = pretty;
+  data["random"] = random;
+    wsConnected.forEach(ws => 
+        ws.send(JSON.stringify([pretty, random]))
+    )
+
 }
-
-    var mins = Math.floor(secs/60);
-    secs %= 60;
-    var pretty = ( (mins < 10) ? "0" : "" ) + mins + ":" + ( (secs < 10) ? "0" : "" ) + secs;
-
-    const updateSecond = doc(db, "second", "second");
-
-    await updateDoc(updateSecond, {
-        second: pretty
-    });
-}
-
-// startTimer(16); // 4 minutes in seconds
-
-// getCities();
-// console.log('RESTful API server started on: ' + port);
+startTimer(16);

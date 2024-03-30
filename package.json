@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "dev" : "node index.js"
+    "dev": "nodemon index.js"
   },
   "author": "",
   "type": "module",
@@ -16,7 +16,11 @@
   },
   "dependencies": {
     "express": "^4.19.2",
-    "firebase": "^10.10.0",
-    "pm2": "^5.3.1"
+    "node-uuid": "^1.4.8",
+    "pm2": "^5.3.1",
+    "ws": "^8.16.0"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.8"
   }
 }
