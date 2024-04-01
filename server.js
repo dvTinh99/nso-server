@@ -2,6 +2,12 @@ import express from 'express';
 import env from 'dotenv';
 env.config();
 
+import { createClient } from 'redis';
+
+const client = createClient();
+await client.connect();
+await client.set('tinhdoan', '123456');
+
 import { getAll } from './controllers/user.controller.js'
   
 const app = express();
