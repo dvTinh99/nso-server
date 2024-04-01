@@ -1,7 +1,12 @@
 import WebSocket, { WebSocketServer } from "ws";
 
+import env from "dotenv";
+env.config();
+
+import app from "./server.js";
+
 const wss = new WebSocketServer({
-  port: 8080,
+  port: process.env.WEBSOCKET_PORT || 8080,
 });
 
 
@@ -9,7 +14,7 @@ const wsConnected = new Set();
 
 wss.on("connection", function (ws) {
 
-    wsConnected.add(ws);
+  wsConnected.add(ws);
 
   ws.on("close", function () {
   });
@@ -64,9 +69,9 @@ async function tick() {
   let data = [];
   data["second"] = pretty;
   data["random"] = random;
-    wsConnected.forEach(ws => 
-        ws.send(JSON.stringify([pretty, random, historyLastNumber]))
-    )
+  wsConnected.forEach(ws => 
+    ws.send(JSON.stringify([pretty, random, historyLastNumber]))
+  )
 
 }
 startTimer(2*60);
