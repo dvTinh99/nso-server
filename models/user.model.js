@@ -3,21 +3,35 @@ import db from '../services/mysql.service.js'
 const TABLE = 'users';
 const User = {
 
-	users(callback){
-		db.query(`Select * from ${TABLE}`, callback);
+	async users(){
+		return await this.get(`Select * from ${TABLE}`);
 	},
-	find(id,callback){
-		return db.query(`select * from ${TABLE} where Id=?`,[id],callback);
+	async find(id){
+		return await this.get(`select * from ${TABLE} where id=?`, [id]);
 	},
-	add(sinhvien,callback){
-		return db.query(`Insert into ${TABLE}(name,class,dob) values(?,?,?)`,[sinhvien.name,sinhvien.class,sinhvien.dob],callback);
+	async findByEmail(email){
+		return await this.get(`select * from ${TABLE} where email=?`, [email]);
 	},
-	delete(id,callback){
-		return db.query(`delete from ${TABLE} where Id=?`,[id],callback);
+	async create(user){
+		return await this.get(`Insert into ${TABLE}(name,email,password) values(?,?,?)`,[user.name, user.email, user.password]);
 	},
-	update(id,sinhvien,callback){
-		return db.query(`update ${TABLE} set name=?,class=?,dob=? where Id=?`,[sinhvien.name,sinhvien.class,sinhvien.dob,id],callback);
-	}
+	// delete(id,callback){
+	// 	return db.query(`delete from ${TABLE} where Id=?`,[id],callback);
+	// },
+	// update(id,sinhvien,callback){
+	// 	return db.query(`update ${TABLE} set name=?,class=?,dob=? where Id=?`,[sinhvien.name,sinhvien.class,sinhvien.dob,id],callback);
+	// },
+	
+	async get(sql, prepare = null){
+		return await new Promise((resolve, reject) => {
+			db.query(sql, prepare, function (err, result, fields) {
+				if (err) reject(err);
+				// console.log('result', result);
+				if (result !== undefined)
+					resolve(JSON.parse(JSON.stringify(result)));
+			});
+		});
+	},
 }
 export default User;
 
