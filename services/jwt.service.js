@@ -19,6 +19,10 @@ const singAccessToken = async (userId) => {
 
 const verifyToken = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
+
+    if (!authHeader) {
+        throw createError.Unauthorized();
+    }
     const bearerToken = authHeader.split(' ');
     const token = bearerToken[1];
 

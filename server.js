@@ -2,26 +2,29 @@ import express from 'express';
 import env from 'dotenv';
 env.config();
 
+import createError from 'http-errors';
+import { verifyToken } from './services/jwt.service.js';
 import { createClient } from 'redis';
+import { getAll } from './controllers/user.controller.js'
+import AuthController from './controllers/auth.controller.js'
+import botRoute from './routes/bot.route.js';
+import authRoute from './routes/auth.route.js';
 
 const client = createClient();
 await client.connect();
 
-import { getAll } from './controllers/user.controller.js'
-import AuthController from './controllers/auth.controller.js'
-
-import { verifyToken } from './services/jwt.service.js';
-import createError from 'http-errors';
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
-app.get('/', verifyToken, async (req, res) => {  
+
+app.use('/bot', botRoute);
+app.use('/auth', authRoute);
+
+app.get('/', async (req, res) => {  
     let users = await getAll();
     res.json(users) 
 });
 
-app.post('/register', AuthController.register);
-app.post('/login', AuthController.login);
 
 app.use((req, res, next) => {
     next(createError.NotFound('This route does not exist.'));
@@ -34,8 +37,9 @@ app.use((err, req, res, next) => {
     })
 });
 
-app.listen(process.env.EXPRESS_PORT || 3001, function () {
-    console.log('running');
+const PORT = process.env.EXPRESS_PORT || 3002;
+app.listen(PORT, function () {
+    console.log(`running ${PORT}`);
     
 });
 export default app;
