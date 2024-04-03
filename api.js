@@ -37,7 +37,7 @@ app.use((err, req, res, next) => {
     })
 });
 
-const PORT = process.env.EXPRESS_PORT || 3002;
+const PORT = process.env.EXPRESS_PORT || 3001;
 app.listen(PORT, function () {
     console.log(`running ${PORT}`);
     

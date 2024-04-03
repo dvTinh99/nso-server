@@ -3,7 +3,7 @@ import WebSocket, { WebSocketServer } from "ws";
 import env from "dotenv";
 env.config();
 
-import app from "./server.js";
+import app from "./api.js";
 
 const wss = new WebSocketServer({
   port: process.env.WEBSOCKET_PORT || 8080,
