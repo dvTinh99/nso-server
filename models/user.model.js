@@ -12,8 +12,42 @@ const User = {
 	async findByEmail(email){
 		return await this.get(`select * from ${TABLE} where email=?`, [email]);
 	},
+	async findByUsername(username){
+		return await this.get(`select * from ${TABLE} where username=?`, [username]);
+	},
 	async create(user){
-		return await this.get(`Insert into ${TABLE}(name,email,password) values(?,?,?)`,[user.name, user.email, user.password]);
+		return await this.get(`Insert into ${TABLE}(username,nickname,secret_code,email,password) values(?,?,?,?,?)`,[user.username, user.nickname, user.secretCode,user.email, user.password]);
+	},
+	
+	// async create(user, id){
+
+	// 	let sql = `Insert into ${TABLE} (`;
+	// 	let params = [];
+	// 	for (const [key, value] of Object.entries(user)) {
+	// 		sql += `${key}=?, `;
+	// 		params.push(String(value));
+	// 	}
+	// 	sql = sql.slice(0, -2); 
+
+	// 	sql += ` where id=?`;
+	// 	params.push(id);
+
+	// 	return await this.get(sql, params);
+	// },
+	async update(user, id){
+
+		let sql = `update ${TABLE} set `;
+		let params = [];
+		for (const [key, value] of Object.entries(user)) {
+			sql += `${key}=?, `;
+			params.push(String(value));
+		}
+		sql = sql.slice(0, -2); 
+
+		sql += ` where id=?`;
+		params.push(id);
+
+		return await this.get(sql, params);
 	},
 	// delete(id,callback){
 	// 	return db.query(`delete from ${TABLE} where Id=?`,[id],callback);

@@ -9,11 +9,14 @@ import { getAll } from './controllers/user.controller.js'
 import AuthController from './controllers/auth.controller.js'
 import botRoute from './routes/bot.route.js';
 import authRoute from './routes/auth.route.js';
+import cors from 'cors';
 
-const client = createClient();
-await client.connect();
+
+// const client = createClient();
+// await client.connect();
 
 const app = express();
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 

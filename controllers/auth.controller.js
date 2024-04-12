@@ -8,6 +8,7 @@ export default {
         try {
             let email = req.body.email;
             let password = req.body.password;
+            delete req.body.password;
 
             let user = await User.findByEmail(email);
 
@@ -18,11 +19,13 @@ export default {
             const salt = await bcrypt.genSalt(10);
             const hashPassword = await bcrypt.hash(password, salt);
 
-            let newUser = {
-                email: email,
-                name: "tinh",
-                password: hashPassword
+            let newUser = { 
+                password : hashPassword,
+                ...req.body
             }
+
+            console.log('newUser', newUser);
+            
 
             User.create(newUser);
             res.json({'user' : newUser});
@@ -35,10 +38,10 @@ export default {
     login: async (req, res, next) => {
         try {
             
-            let email = req.body.email;
+            let username = req.body.username;
             let password = req.body.password;
     
-            let user = await User.findByEmail(email);
+            let user = await User.findByUsername(username);
 
             
             if (user.length < 0) {
