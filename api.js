@@ -9,6 +9,7 @@ import { getAll } from './controllers/user.controller.js'
 import AuthController from './controllers/auth.controller.js'
 import botRoute from './routes/bot.route.js';
 import authRoute from './routes/auth.route.js';
+import historyRoute from './routes/history.route.js';
 import cors from 'cors';
 
 
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: true}));
 
 app.use('/bot', botRoute);
 app.use('/auth', authRoute);
+app.use('/history', historyRoute);
 
 app.get('/', async (req, res) => {  
     let users = await getAll();

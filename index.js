@@ -4,6 +4,7 @@ import env from "dotenv";
 env.config();
 
 import app from "./api.js";
+import HistoryRepo from './repositories/history.repositories.js';
 
 const wss = new WebSocketServer({
   port: process.env.WEBSOCKET_PORT || 8080,
@@ -24,9 +25,15 @@ wss.on("connection", function (ws) {
 var timeInSecs = 120;
 var ticker;
 var random = 123123123;
-var xuThisGame = 83753;
-var xuPreviousGame = 50345;
-var historyLastNumber = [];
+
+var get13Record = await HistoryRepo.getResultHistory(13)
+var historyLastNumber = Array.from(get13Record, (x) => x.result);
+
+var xuThisGame = get13Record[12].xu;
+var xuPreviousGame = get13Record[11].xu;
+
+var timeOneGame = 2 * 60;
+var timeStartRandom = 15;
 
 
 function startTimer(secs) {
@@ -41,7 +48,9 @@ function getRandomInt(max) {
 async function tick() {
     
   var secs = timeInSecs;
-  if (secs == 15) {
+  console.log('secs', secs);
+  
+  if (secs == timeStartRandom) {
     xuPreviousGame = xuThisGame;
     random = getRandomInt(1000000000);
     xuThisGame = getRandomInt(99999);
@@ -54,12 +63,19 @@ async function tick() {
     }
 
     let lastNumber = sumSplitRandom % 10;
-    if (historyLastNumber.length >= 13) {
-        historyLastNumber.shift();
-        historyLastNumber.push(lastNumber);
-    } else {
 
-        historyLastNumber.push(lastNumber);
+    let history = {
+      xu : xuThisGame,
+      result : lastNumber
+    }
+    if (historyLastNumber.length >= 13) {
+      historyLastNumber.shift();
+      await HistoryRepo.shift();
+      historyLastNumber.push(lastNumber);
+      await HistoryRepo.create(history);
+    } else {
+      await HistoryRepo.create(history);
+      historyLastNumber.push(lastNumber);
     }
 
   }
@@ -67,7 +83,7 @@ async function tick() {
     timeInSecs--;
   } else {
     clearInterval(ticker);
-    startTimer(2*60); // 4 minutes in seconds
+    startTimer(timeOneGame); // 4 minutes in seconds
   }
 
   var mins = Math.floor(secs / 60);
@@ -82,4 +98,4 @@ async function tick() {
   )
 
 }
-startTimer(2*60);
+startTimer(timeOneGame);
