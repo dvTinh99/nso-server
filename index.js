@@ -24,6 +24,8 @@ wss.on("connection", function (ws) {
 var timeInSecs = 120;
 var ticker;
 var random = 123123123;
+var xuThisGame = 83753;
+var xuPreviousGame = 50345;
 var historyLastNumber = [];
 
 
@@ -32,11 +34,17 @@ function startTimer(secs) {
   ticker = setInterval(tick, 1000);
 }
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 async function tick() {
     
   var secs = timeInSecs;
-  if (secs == 2) {
-    random = Math.floor(Math.random() * 1000000000);
+  if (secs == 15) {
+    xuPreviousGame = xuThisGame;
+    random = getRandomInt(1000000000);
+    xuThisGame = getRandomInt(99999);
 
     let split = String(random).split("");
     let sumSplitRandom = 0;
@@ -70,7 +78,7 @@ async function tick() {
   data["second"] = pretty;
   data["random"] = random;
   wsConnected.forEach(ws => 
-    ws.send(JSON.stringify([pretty, random, historyLastNumber]))
+    ws.send(JSON.stringify([pretty, random, historyLastNumber, xuThisGame, xuPreviousGame]))
   )
 
 }
