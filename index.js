@@ -24,7 +24,7 @@ wss.on("connection", function (ws) {
 
 var timeInSecs = 120;
 var ticker;
-var random = 123123123;
+var random = getRandomInt(1000000000);
 
 var get13Record = await HistoryRepo.getResultHistory(13)
 var historyLastNumber = Array.from(get13Record, (x) => x.result);
@@ -53,8 +53,10 @@ async function tick() {
   if (secs == timeStartRandom) {
     xuPreviousGame = xuThisGame;
     random = getRandomInt(1000000000);
-    xuThisGame = getRandomInt(99999);
+  }
 
+  if (secs == 0) {
+    xuThisGame = getRandomInt(99999);
     let split = String(random).split("");
     let sumSplitRandom = 0;
          
@@ -77,7 +79,6 @@ async function tick() {
       await HistoryRepo.create(history);
       historyLastNumber.push(lastNumber);
     }
-
   }
   if (secs > 0) {
     timeInSecs--;
