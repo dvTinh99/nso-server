@@ -40,15 +40,14 @@ export default {
             
             let username = req.body.username;
             let password = req.body.password;
-    
+
             let user = await User.findByUsername(username);
 
-            
-            if (user.length < 0) {
+            if (user.length <= 0) {
                 throw createError.NotFound('user not found');
             }
             user = user[0];
-    
+
             let checkPassword = await bcrypt.compare(password, user.password);
             
             if (!checkPassword) throw createError.Unauthorized();
@@ -61,5 +60,14 @@ export default {
         } catch (error) {
             next(error)
         }
+    },
+
+    info: async (req, res, next) => {
+        let id = req.payload.userId;
+        let user = await User.find(id);
+        let rs = user[0];
+        res.json({
+            user : rs
+        });
     }
 }

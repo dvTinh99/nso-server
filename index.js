@@ -53,8 +53,6 @@ function getRandomInt(max) {
 async function tick() {
     
   var secs = timeInSecs;
-  console.log('secs', secs);
-  
   if (secs == timeStartRandom) {
     xuPreviousGame = xuThisGame;
     random = getRandomInt(1000000000);

@@ -21,7 +21,7 @@ const verifyToken = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
 
     if (!authHeader) {
-        throw createError.Unauthorized();
+        return next(createError.Unauthorized());
     }
     const bearerToken = authHeader.split(' ');
     const token = bearerToken[1];
@@ -33,8 +33,13 @@ const verifyToken = async (req, res, next) => {
         req.payload = payload;
         next();
     });
+};
+
+const parseJwt = async (token) => {
+    return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
 }
 export {
     singAccessToken,
-    verifyToken
+    verifyToken,
+    parseJwt
 }
