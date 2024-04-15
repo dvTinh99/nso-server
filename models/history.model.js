@@ -3,8 +3,8 @@ import db from '../services/mysql.service.js'
 const TABLE = 'game_histories';
 const User = {
 
-	async histories(){
-		return await this.get(`Select * from ${TABLE}`);
+	async histories(limit = 15, offset = 0){
+		return await this.get(`Select * from ${TABLE} limit ${limit} offset ${offset}`);
 	},
 	async getResultHistory(limit, order = 'ASC'){
 		return await this.get(`Select result, xu from ${TABLE} order by id ${order} limit ${limit}`);

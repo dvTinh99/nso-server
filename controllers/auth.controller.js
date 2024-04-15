@@ -69,5 +69,19 @@ export default {
         res.json({
             user : rs
         });
+    },
+    addXu: async (req, res, next) => {
+        let username = req.body.username;
+        let user = await User.findByUsername(username);
+
+        let xu = req.body.xu;
+        let rs = await User.update({xu:xu}, user[0].id);
+
+        if (rs.affectedRows == 1) {
+            res.json({
+                "message" : "add xu success"
+            });
+        }
+        throw createError.NotFound('user not found');
     }
 }

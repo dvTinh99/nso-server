@@ -71,11 +71,13 @@ async function tick() {
 
     let history = {
       xu : xuThisGame,
-      result : lastNumber
+      result : lastNumber,
+      total_result: sumSplitRandom,
+      sum: random,
     }
     if (historyLastNumber.length >= 13) {
       historyLastNumber.shift();
-      await HistoryRepo.shift();
+      // await HistoryRepo.shift();
       historyLastNumber.push(lastNumber);
       await HistoryRepo.create(history);
     } else {

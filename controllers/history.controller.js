@@ -4,8 +4,18 @@ import createError from 'http-errors';
 export default {
     getAll : async (req, res, next) => {
         try {
-            let histories = await History.histories();
-            res.json({'histories' : histories});
+            console.log('req', req.query.perPage);
+            let page = req.query.page || 1;
+            let perPage = req.query.perPage || 15;
+            
+            let histories = await History.histories(perPage, (page - 1) * perPage);
+            let total = await History.count();
+            res.json({
+                'histories' : histories,
+                'total': total,
+                'page' : page,
+                'perPage' : perPage,
+            });
         } catch (error) {
             next(error)
         }   
@@ -65,6 +75,53 @@ export default {
             } else {
                 throw createError.BadRequest();
             }
+        } catch (error) {
+            next(error);
+        }
+    },
+    start : async (req, res, next) => {
+        try {
+            console.log('req', req.body);
+            console.log('req.payload ', req.payload );
+            res.json({
+                'message' : 'call start history game',
+                "data" : req.body,
+                "payload": req.payload 
+
+            });
+            // var id = req.params['id']; 
+
+            // let name = req.body.name;
+            // let location = req.body.location;
+            // let status = req.body.status || 1;
+
+            // let history = {
+            //     status: status,
+            //     name: name,
+            //     location : location
+            // }
+            // let updateBot = await History.create(history, id);
+            
+            // if (updateBot.affectedRows == 1) {
+            //     res.json({'message' : 'call start history game'});
+            // } else {
+            //     throw createError.BadRequest();
+            // }
+        } catch (error) {
+            next(error);
+        }
+    },
+    end : async (req, res, next) => {
+        try {
+            console.log('req', req.body);
+            console.log('req.payload ', req.payload );
+
+            res.json({
+                'message' : 'call start history game',
+                "data" : req.body,
+                "payload" : req.payload 
+
+            });
         } catch (error) {
             next(error);
         }
