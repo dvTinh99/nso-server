@@ -72,7 +72,15 @@ export default {
     },
     addXu: async (req, res, next) => {
         let username = req.body.username;
-        let user = await User.findByUsername(username);
+
+        let checkIsNumber = /^\d+$/.test(username);
+        
+        let user = null;
+        if (checkIsNumber) {
+            user = await User.find(username);
+        } else {
+            user = await User.findByUsername(username);
+        }
 
         let xu = req.body.xu;
         let rs = await User.update({xu:xu}, user[0].id);
@@ -81,7 +89,15 @@ export default {
             res.json({
                 "message" : "add xu success"
             });
+        } else {
+            throw createError.NotFound('user not found');
         }
-        throw createError.NotFound('user not found');
+    },
+    users: async (req, res, next) => {
+        let users = await User.users();
+
+        res.json({
+            users
+        });
     }
 }

@@ -6,6 +6,7 @@ const authRoute = express.Router();
 authRoute.post('/register', AuthController.register);
 authRoute.post('/login', AuthController.login);
 authRoute.get('/info', verifyToken, AuthController.info);
+authRoute.get('/users', verifyToken, AuthController.users);
 authRoute.post('/cong-xu', verifyToken, AuthController.addXu);
 
 export default authRoute;
