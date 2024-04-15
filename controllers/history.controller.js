@@ -1,6 +1,7 @@
 import History from '../models/history.model.js';
 import HistoryRepo from '../repositories/history.repositories.js';
 import createError from 'http-errors';
+import fs from 'fs';
 export default {
     getAll : async (req, res, next) => {
         try {
@@ -81,8 +82,20 @@ export default {
     },
     start : async (req, res, next) => {
         try {
-            console.log('req', req.body);
-            console.log('req.payload ', req.payload );
+            // console.log('req', req.body);
+            // console.log('req.payload ', req.payload );
+            // fs.appendFile('./test.txt', 'start : ' + JSON.stringify(req.body) + '\n',  function (err, data) {
+            //     if (err) throw err;
+            //     console.log('write file successfully');
+            // });
+            const vxmm = req.body;
+            let history = {
+                spin_code: vxmm.SpinCode, 
+                xu : vxmm.TotalXu,
+                rate : vxmm.Rate,
+                number_people : vxmm.NumberPeople
+            }
+            await HistoryRepo.create(history);
             res.json({
                 'message' : 'call start history game',
                 "data" : req.body,
@@ -113,9 +126,11 @@ export default {
     },
     end : async (req, res, next) => {
         try {
-            console.log('req', req.body);
-            console.log('req.payload ', req.payload );
-
+            const vxmm = req.body;
+            let history = {
+                status : 1
+            }
+            await HistoryRepo.update(history, vxmm.SpinCode);
             res.json({
                 'message' : 'call start history game',
                 "data" : req.body,
@@ -123,7 +138,7 @@ export default {
 
             });
         } catch (error) {
-            next(error);
+            throw createError.BadRequest();
         }
     },
 

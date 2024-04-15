@@ -50,12 +50,16 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+function getRandom(length) {
+  return Math.floor(Math.pow(10, length-1) + Math.random() * 9 * Math.pow(10, length-1));
+}
+
 async function tick() {
     
   var secs = timeInSecs;
   if (secs == timeStartRandom) {
     xuPreviousGame = xuThisGame;
-    random = getRandomInt(1000000000);
+    random = getRandom(9);
   }
 
   if (secs == 0) {
@@ -79,9 +83,9 @@ async function tick() {
       historyLastNumber.shift();
       // await HistoryRepo.shift();
       historyLastNumber.push(lastNumber);
-      await HistoryRepo.create(history);
+      // await HistoryRepo.create(history);
     } else {
-      await HistoryRepo.create(history);
+      // await HistoryRepo.create(history);
       historyLastNumber.push(lastNumber);
     }
   }
