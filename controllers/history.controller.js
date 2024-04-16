@@ -24,19 +24,19 @@ export default {
     },
     create : async (req, res, next) => {
         try {
-            let newHistory = await HistoryRepo.shift();
+            const vxmm = req.body;
+            let history = {
+                xu: vxmm.xuThisGame, 
+                spin_code : vxmm.spinId,
+                status : 0
+            }
+            await HistoryRepo.create(history);
+            res.json({
+                'message' : 'create history game',
+                "data" : req.body,
+                "payload": req.payload 
 
-            // let history = {
-            //     xu : 85000,
-            //     result : 2
-            // }
-
-            
-            // if (newHistory) {
-            //     res.json({'message' : "create success"});
-            // } else {
-            //     throw createError.BadRequest();
-            // }
+            });
         } catch (error) {
             next(error);
         }
@@ -82,44 +82,17 @@ export default {
     },
     start : async (req, res, next) => {
         try {
-            // console.log('req', req.body);
-            // console.log('req.payload ', req.payload );
-            // fs.appendFile('./test.txt', 'start : ' + JSON.stringify(req.body) + '\n',  function (err, data) {
-            //     if (err) throw err;
-            //     console.log('write file successfully');
-            // });
             const vxmm = req.body;
             let history = {
-                spin_code: vxmm.SpinCode, 
-                xu : vxmm.TotalXu,
-                rate : vxmm.Rate,
-                number_people : vxmm.NumberPeople
+                spin_code: vxmm.spinId, 
+                time : vxmm.time
             }
-            await HistoryRepo.create(history);
             res.json({
                 'message' : 'call start history game',
                 "data" : req.body,
                 "payload": req.payload 
 
             });
-            // var id = req.params['id']; 
-
-            // let name = req.body.name;
-            // let location = req.body.location;
-            // let status = req.body.status || 1;
-
-            // let history = {
-            //     status: status,
-            //     name: name,
-            //     location : location
-            // }
-            // let updateBot = await History.create(history, id);
-            
-            // if (updateBot.affectedRows == 1) {
-            //     res.json({'message' : 'call start history game'});
-            // } else {
-            //     throw createError.BadRequest();
-            // }
         } catch (error) {
             next(error);
         }
@@ -128,11 +101,14 @@ export default {
         try {
             const vxmm = req.body;
             let history = {
-                status : 1
+                "rate" : vxmm.rate,
+                "xu" : vxmm.xu,
+                "people" : vxmm.people,
+                "status" : 1
             }
-            await HistoryRepo.update(history, vxmm.SpinCode);
+            await HistoryRepo.update(history, vxmm.spinId);
             res.json({
-                'message' : 'call start history game',
+                'message' : 'call end history game',
                 "data" : req.body,
                 "payload" : req.payload 
 
