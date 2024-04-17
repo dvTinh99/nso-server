@@ -33,8 +33,8 @@ var xuThisGame = 0;
 var xuPreviousGame = 0;
 if (get13Record.length > 0) {
 
-  var xuThisGame = get13Record[get13Record.length - 1].xu;
-  var xuPreviousGame = get13Record[get13Record.length - 2].xu;
+  // var xuThisGame = get13Record[get13Record.length - 1].xu;
+  // var xuPreviousGame = get13Record[get13Record.length - 2].xu;
 }
 
 var timeOneGame = 2 * 60;

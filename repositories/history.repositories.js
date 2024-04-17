@@ -11,8 +11,9 @@ export default {
     },
     create : async (data) => {
         try {
-
             let newHistory = await History.create(data);
+            console.log('newHistory', newHistory);
+            
             if (newHistory.affectedRows == 1) {
                 return true;
             } else {

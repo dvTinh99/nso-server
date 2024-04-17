@@ -12,6 +12,9 @@ const User = {
 	async find(id){
 		return await this.get(`select * from ${TABLE} where id=?`, [id]);
 	},
+	async findBySpinCode(code){
+		return await this.get(`select * from ${TABLE} where spin_code=?`, [code]);
+	},
 	async create(histories){
 		let sql = `Insert into ${TABLE} (`;
 		let values = ' values (';
@@ -41,6 +44,21 @@ const User = {
 		sql = sql.slice(0, -2); 
 
 		sql += ` where id=?`;
+		params.push(id);
+
+		return await this.get(sql, params);
+	},
+	async updateBySpinCode(histories, id){
+
+		let sql = `update ${TABLE} set `;
+		let params = [];
+		for (const [key, value] of Object.entries(histories)) {
+			sql += `${key}=?, `;
+			params.push(String(value));
+		}
+		sql = sql.slice(0, -2); 
+
+		sql += ` where spin_code=?`;
 		params.push(id);
 
 		return await this.get(sql, params);

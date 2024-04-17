@@ -25,18 +25,29 @@ export default {
     create : async (req, res, next) => {
         try {
             const vxmm = req.body;
+            console.log('create vxmm', vxmm);
+            
             let history = {
-                xu: vxmm.xuThisGame, 
+                xu: parseInt(vxmm.xuThisGame.replace(/,/g, ''), 10), 
                 spin_code : vxmm.spinId,
                 status : 0
             }
-            await HistoryRepo.create(history);
-            res.json({
-                'message' : 'create history game',
-                "data" : req.body,
-                "payload": req.payload 
+            let checkExit = await History.findBySpinCode(vxmm.spinId);
+            if (checkExit.length <= 0 ) {
 
-            });
+                let ßnewHistory = await History.create(history);
+            }
+            
+            if (newHistory.affectedRows == 1) {
+                res.json({
+                    'message' : 'create history game',
+                    "data" : req.body,
+                    "payload": req.payload 
+    
+                });
+            } else {
+                throw createError.BadRequest();
+            }
         } catch (error) {
             next(error);
         }
@@ -82,10 +93,15 @@ export default {
     },
     start : async (req, res, next) => {
         try {
+            console.log('start');
             const vxmm = req.body;
             let history = {
-                spin_code: vxmm.spinId, 
                 time : vxmm.time
+            }
+            let checkExit = await History.findBySpinCode(vxmm.spinId);
+            console.log('checkExit', checkExit.length);
+            if (checkExit.length <= 0) {
+                let rs = await History.create(history);
             }
             res.json({
                 'message' : 'call start history game',
@@ -102,19 +118,25 @@ export default {
             const vxmm = req.body;
             let history = {
                 "rate" : vxmm.rate,
-                "xu" : vxmm.xu,
-                "people" : vxmm.people,
+                "xu" : parseInt(vxmm.xu.replace(/,/g, ''), 10),
+                "number_people" : vxmm.people,
                 "status" : 1
             }
-            await HistoryRepo.update(history, vxmm.spinId);
-            res.json({
-                'message' : 'call end history game',
-                "data" : req.body,
-                "payload" : req.payload 
-
-            });
+            console.log('end', history);
+            let updateBot = await History.updateBySpinCode(history, vxmm.spinId);
+            
+            if (updateBot.affectedRows == 1) {
+                res.json({
+                    'message' : 'call end history game',
+                    "data" : req.body,
+                    "payload" : req.payload 
+    
+                });
+            } else {
+                throw createError.BadRequest();
+            }
         } catch (error) {
-            throw createError.BadRequest();
+            next(error);
         }
     },
 
