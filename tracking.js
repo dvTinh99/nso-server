@@ -48,24 +48,27 @@ function sleep(ms) {
               .addEventListener('DOMSubtreeModified', function(e) {
                   let time = e.target.nodeValue;
                   if (time) {
-                      [minus, second] = time.split(':');
+                    let [minus, second] = time.split(':');
+                    if (second != '00' && !gameStart) {
+                        if (minus == '01' || minus == "00") {
+                            spinId = document.querySelector("#root > div.bg-gray-e6 > div > div > div:nth-child(2) > div.mt-3.grid.grid-cols-2.gap-8 > div:nth-child(1) > div > div > div:nth-child(1)")
+                            .children[1].children[0].innerText.slice(1);
+                    
+                            let xuThisGame = document.querySelector("#root > div.bg-gray-e6 > div > div > div:nth-child(2) > div.mt-3.grid.grid-cols-2.gap-8 > div:nth-child(1) > div > div > div:nth-child(3)")
+                            .children[1].children[0].innerText;
+                            let game = {
+                                "spinId" : spinId,
+                                "time" : time,
+                                "xuThisGame" : xuThisGame
+                            }
+                            console.log('game start', game);
+                            // status start
+                            gameStart = true;
+                            sendHttp(`${URL}start`, game)
+        
+                        }
+                    }
                       
-                      if (!gameStart && minus && second) {
-                          spinId = document.querySelector("#root > div.bg-gray-e6 > div > div > div:nth-child(2) > div.mt-3.grid.grid-cols-2.gap-8 > div:nth-child(1) > div > div > div:nth-child(1)")
-              .children[1].children[0].innerText.slice(1);
-      
-              let xuThisGame = document.querySelector("#root > div.bg-gray-e6 > div > div > div:nth-child(2) > div.mt-3.grid.grid-cols-2.gap-8 > div:nth-child(1) > div > div > div:nth-child(3)")
-              .children[1].children[0].innerText;
-                          let game = {
-                              "spinId" : spinId,
-                              "time" : time,
-                              "xuThisGame" : xuThisGame
-                          }
-                          console.log('game start', game);
-                          // status start
-                          gameStart = true;
-                          sendHttp(`${URL}start`, game)
-                      }
                   }
                   
               });
