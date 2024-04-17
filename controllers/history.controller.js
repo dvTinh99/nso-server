@@ -1,6 +1,8 @@
 import History from '../models/history.model.js';
 import HistoryRepo from '../repositories/history.repositories.js';
 import createError from 'http-errors';
+
+import startTimer from '../ws.js';
 import fs from 'fs';
 export default {
     getAll : async (req, res, next) => {
@@ -87,6 +89,9 @@ export default {
                 spin_code: vxmm.spinId, 
                 time : vxmm.time
             }
+
+            [minute, second] = vxmm.time.split(':');
+            startTimer(parseInt(minute) * 60 + parent(second));
             res.json({
                 'message' : 'call start history game',
                 "data" : req.body,

@@ -4,7 +4,6 @@ env.config();
 
 import createError from 'http-errors';
 import { verifyToken } from './services/jwt.service.js';
-import { createClient } from 'redis';
 import { getAll } from './controllers/user.controller.js'
 import AuthController from './controllers/auth.controller.js'
 import botRoute from './routes/bot.route.js';
