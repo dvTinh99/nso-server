@@ -2,7 +2,7 @@ import History from '../models/history.model.js';
 import HistoryRepo from '../repositories/history.repositories.js';
 import createError from 'http-errors';
 
-import startTimer from '../ws.js';
+import startTimer, { setStart, setSpinCode, setTimeInSecs } from '../ws.js';
 import fs from 'fs';
 export default {
     getAll : async (req, res, next) => {
@@ -37,8 +37,11 @@ export default {
             let checkExit = await History.findBySpinCode(vxmm.spinId);
             if (checkExit.length <= 0 ) {
 
-                let ßnewHistory = await History.create(history);
+                let newHistory = await History.create(history);
             }
+
+            setSpinCode(vxmm.spinId);
+            startTimer(120);
             
             if (newHistory.affectedRows == 1) {
                 res.json({
@@ -98,7 +101,7 @@ export default {
             console.log('start');
             const vxmm = req.body;
             let history = {
-                time : vxmm.time
+                spin_code : vxmm.spinId
             }
 
             let checkExit = await History.findBySpinCode(vxmm.spinId);
@@ -106,8 +109,11 @@ export default {
             if (checkExit.length <= 0) {
                 let rs = await History.create(history);
             }
-            [minute, second] = vxmm.time.split(':');
-            startTimer(parseInt(minute) * 60 + parent(second));
+            console.log('start timer', vxmm.time);
+            setSpinCode(vxmm.spinId);
+            setStart(true);
+            let [minus, second] = vxmm.time.split(':');
+            setTimeInSecs(parseInt(minus) * 60 + parseInt(second));
             res.json({
                 'message' : 'call start history game',
                 "data" : req.body,
@@ -129,7 +135,7 @@ export default {
             }
             console.log('end', history);
             let updateBot = await History.updateBySpinCode(history, vxmm.spinId);
-            
+            setStart(false);
             if (updateBot.affectedRows == 1) {
                 res.json({
                     'message' : 'call end history game',

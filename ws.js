@@ -9,6 +9,7 @@ const wss = new WebSocketServer({
 
 const wsConnected = new Set();
 
+
 wss.on("connection", function (ws) {
 
   wsConnected.add(ws);
@@ -21,6 +22,7 @@ wss.on("connection", function (ws) {
 var timeInSecs = 120;
 var ticker;
 var random = getRandomInt(1000000000);
+var start = false;
 
 var get13Record = await HistoryRepo.getResultHistory(13)
 var historyLastNumber = Array.from(get13Record, (x) => x.result);
@@ -35,7 +37,7 @@ if (get13Record.length > 0) {
 
 var timeOneGame = 2 * 60;
 var timeStartRandom = 15;
-
+var spinCode = null;
 
 function startTimer(secs) {
   timeInSecs = parseInt(secs);
@@ -86,7 +88,9 @@ async function tick() {
     }
   }
   if (secs > 0) {
-    timeInSecs--;
+    if (start) {
+      timeInSecs--;
+    }
   } else {
     clearInterval(ticker);
     // startTimer(timeOneGame); // 4 minutes in seconds
@@ -96,13 +100,19 @@ async function tick() {
   secs %= 60;
   var pretty = (mins < 10 ? "0" : "") + mins + ":" + (secs < 10 ? "0" : "") + secs;
 
-  let data = [];
-  data["second"] = pretty;
-  data["random"] = random;
   wsConnected.forEach(ws => 
-    ws.send(JSON.stringify([pretty, random, historyLastNumber, xuThisGame, xuPreviousGame]))
+    ws.send(JSON.stringify([spinCode, pretty, random, historyLastNumber, xuThisGame, xuPreviousGame]))
   )
 
 }
-
+export const setStart = (isStart) => {
+  start = isStart;
+}
+export const setSpinCode = (code) => {
+  spinCode = code;
+}
+export const setTimeInSecs = (sec) => {
+  timeInSecs = sec;
+}
+export const clients = wsConnected;
 export default startTimer;
