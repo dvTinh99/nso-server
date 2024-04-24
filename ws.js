@@ -15,7 +15,7 @@ wss.on("connection", function (ws) {
   wsConnected.add(ws);
 
   ws.on("close", function () {
-  });
+  }); 
 });
 
 
