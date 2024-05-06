@@ -58,7 +58,8 @@ export default {
             let accessToken = await singAccessToken(user.id);
 
             res.json({
-                accessToken
+                accessToken,
+                user
             });
         } catch (error) {
             next(error)

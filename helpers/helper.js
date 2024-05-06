@@ -49,7 +49,7 @@ const win = async (spinId) => {
 
             User.update(param, game.user_id);
             flagWin = true;
-        } else if (lastNumber === game.bet) {
+        } else if (lastNumber == game.bet) {
             let param = {
                 xu : userUpdate.xu += (game.xu * 6)
             }
