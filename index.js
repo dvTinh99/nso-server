@@ -1,5 +1,5 @@
 import WebSocket, { WebSocketServer } from "ws";
-
+import { win } from './helpers/helper.js'
 import env from "dotenv";
 env.config();
 
@@ -25,7 +25,7 @@ if (get13Record.length > 0) {
 
 var timeOneGame = 2 * 60;
 var timeStartRandom = 15;
-var spinCode = null;
+var spinCode = 123123;
 
 function startTimer(secs) {
     timeInSecs = parseInt(secs);
@@ -131,6 +131,7 @@ function setSpinCode(num) {
 
 function stopSpin() {
     clearInterval(ticker);
+    win(spinCode);
 }
 global.startTimer = startTimer;
 global.setSpinCode = setSpinCode;

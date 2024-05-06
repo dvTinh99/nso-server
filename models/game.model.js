@@ -9,6 +9,9 @@ const User = {
 	async find(id){
 		return await this.get(`select * from ${TABLE} where id=?`, [id]);
 	},
+	async findBySpinCode(id){
+		return await this.get(`select * from ${TABLE} where spin_code=?`, [id]);
+	},
 	async create(game){
 		return await this.get(`Insert into ${TABLE}(user_id,spin_code,xu,bet) values(?,?,?,?)`,[game.user_id, game.spin_code, game.xu,game.bet]);
 	},

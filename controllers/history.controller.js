@@ -1,7 +1,6 @@
 import History from "../models/history.model.js";
 import HistoryRepo from "../repositories/history.repositories.js";
 import createError from "http-errors";
-
 // import startTimer, { setStart, setSpinCode, setTimeInSecs } from '../ws.js';
 import fs from "fs";
 
@@ -167,7 +166,7 @@ export default {
   },
   end: async (req, res, next) => {
     console.log('end');
-    stopSpin();
+    
     const vxmm = req.body;
     let history = {
       rate: vxmm.rate,
@@ -177,6 +176,7 @@ export default {
       status: 1,
     };
     let updateBot = await History.updateBySpinCode(history, vxmm.spinId);
+    stopSpin();
     res.json({
       message: "call end history game",
       data: req.body,

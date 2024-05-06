@@ -1,7 +1,7 @@
 import db from '../services/mysql.service.js'
 
 const TABLE = 'game_histories';
-const User = {
+const History = {
 
 	async histories(limit = 15, offset = 0){
 		return await this.get(`Select * from ${TABLE} limit ${limit} offset ${offset}`);
@@ -88,5 +88,5 @@ const User = {
 		});
 	},
 }
-export default User;
+export default History;
 
