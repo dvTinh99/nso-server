@@ -38,13 +38,16 @@ export default {
     login: async (req, res, next) => {
         try {
             
-            let username = req.body.username;
+            let username = req.body.username || req.body.email;
             let password = req.body.password;
 
             let user = await User.findByUsername(username);
 
             if (user.length <= 0) {
-                throw createError.NotFound('user not found');
+                user = await User.findByEmail(username);
+                if (user.length <= 0) {
+                    throw createError.NotFound('user not found');
+                }
             }
             user = user[0];
 
