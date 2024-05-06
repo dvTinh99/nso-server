@@ -1,0 +1,414 @@
+{
+	"info": {
+		"_postman_id": "645b0ddd-36a0-4d60-8605-44678f6bbf48",
+		"name": "nso",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "bots",
+			"item": [
+				{
+					"name": "all",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer d2f8da78-36f8-3ee8-9018-4e1faca6a2a4",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "X-Token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0X2NsaWVudCIsInJvbGUiOlsiYWRtaW4iXSwidXNyIjoidGVzdF9jbGllbnQiLCJpc3MiOiJ1YWEtc2VydmljZSIsImV4cCI6MTcxMTM0NTExMywiaWF0IjoxNzEwNzQwMzEzfQ.AjR9uhC7ezpcNiOGLtUWE8yU3Akpgt7Q3doHt4uxNVI",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"tinh31@gmail.com\",\n    \"password\" : \"abc123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/bot/all",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bot",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer d2f8da78-36f8-3ee8-9018-4e1faca6a2a4",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "X-Token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0X2NsaWVudCIsInJvbGUiOlsiYWRtaW4iXSwidXNyIjoidGVzdF9jbGllbnQiLCJpc3MiOiJ1YWEtc2VydmljZSIsImV4cCI6MTcxMTM0NTExMywiaWF0IjoxNzEwNzQwMzEzfQ.AjR9uhC7ezpcNiOGLtUWE8yU3Akpgt7Q3doHt4uxNVI",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"dctk1\",\n    \"location\" : \"kunai\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/bot/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bot",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer d2f8da78-36f8-3ee8-9018-4e1faca6a2a4",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "X-Token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0X2NsaWVudCIsInJvbGUiOlsiYWRtaW4iXSwidXNyIjoidGVzdF9jbGllbnQiLCJpc3MiOiJ1YWEtc2VydmljZSIsImV4cCI6MTcxMTM0NTExMywiaWF0IjoxNzEwNzQwMzEzfQ.AjR9uhC7ezpcNiOGLtUWE8yU3Akpgt7Q3doHt4uxNVI",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"tinh31@gmail.com\",\n    \"password\" : \"abc123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/bot/delete/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bot",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer d2f8da78-36f8-3ee8-9018-4e1faca6a2a4",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "X-Token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0X2NsaWVudCIsInJvbGUiOlsiYWRtaW4iXSwidXNyIjoidGVzdF9jbGllbnQiLCJpc3MiOiJ1YWEtc2VydmljZSIsImV4cCI6MTcxMTM0NTExMywiaWF0IjoxNzEwNzQwMzEzfQ.AjR9uhC7ezpcNiOGLtUWE8yU3Akpgt7Q3doHt4uxNVI",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTcxMjEwNjEyOCwiZXhwIjoxNzEyMTA5NzI4fQ.TDiRZQ1OfjVbN-lEGf5ZSxtxStg59_HxR61e_d3h5PQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"dctk1\",\n    \"location\" : \"update\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/bot/update/13",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"bot",
+								"update",
+								"13"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer d2f8da78-36f8-3ee8-9018-4e1faca6a2a4",
+								"type": "default"
+							},
+							{
+								"key": "X-Token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0X2NsaWVudCIsInJvbGUiOlsiYWRtaW4iXSwidXNyIjoidGVzdF9jbGllbnQiLCJpc3MiOiJ1YWEtc2VydmljZSIsImV4cCI6MTcxMTM0NTExMywiaWF0IjoxNzEwNzQwMzEzfQ.AjR9uhC7ezpcNiOGLtUWE8yU3Akpgt7Q3doHt4uxNVI",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJraWQiOiJscnU1ZXFhT2hBRFRKbTJBek1qcmJobHgyeklYV3hjOTBBRmNESXhvckI4PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI5MDJkNTdhOS02NjY4LTRiMjctYTNkMy01ZGEzYmZhYjdjZjMiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmFwLW5vcnRoZWFzdC0xLmFtYXpvbmF3cy5jb21cL2FwLW5vcnRoZWFzdC0xX1llNTVXVG9aNCIsImNvZ25pdG86dXNlcm5hbWUiOiI5MDJkNTdhOS02NjY4LTRiMjctYTNkMy01ZGEzYmZhYjdjZjMiLCJhdWQiOiJwOTBpdnZnYWVlYWxwZG9lYnYyZDBxZGxsIiwiZXZlbnRfaWQiOiJiODZmM2EzZi02NWQ0LTQyY2EtYjZhZS0zYjg3YzA5MjFkNzIiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTcxMTQxOTUzMCwibmFtZSI6IueZu-mMsiIsImV4cCI6MTcxMTQyNjE1MywiaWF0IjoxNzExNDIyNTUzLCJlbWFpbCI6InRpZW50cmFuLmNvZGVjb21wbGV0ZUBnbWFpbC5jb20ifQ.LWTzlSl-F5KIr-2k4B8QXO3HNFdpz3sZJ_QMnLsn__kBHCeLRPpgfMsCkjZbiTL6oiy0h_IQAcMRwy-kNvc7Ajn9wKiQfW2FQjwfcrbV8nx-Tj0aUuKUlLAeRfSwITRZkmtPVoMOKkc2vW8jxsXAvFSlZOcDn5ap5qN4bW1N1z_kVQpQTlzUbaqlsrbeZIrBOZZMscAPW9xVcLtn-jEvTpveNitfTzPSG_4HmIYRVcvKW08SLLGh_2TNNJZAM-7xo18IpvhQBt-CtyW7vjDNTTJqFa6vrWj0jsD3Io51uORp-qvmHXiomV4iCT7HQxhPvYT_YGYXa1JxIyLH30SS5g",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"tinh31@gmail.com\",\n    \"password\" : \"abc123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer d2f8da78-36f8-3ee8-9018-4e1faca6a2a4",
+								"type": "default"
+							},
+							{
+								"key": "X-Token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0X2NsaWVudCIsInJvbGUiOlsiYWRtaW4iXSwidXNyIjoidGVzdF9jbGllbnQiLCJpc3MiOiJ1YWEtc2VydmljZSIsImV4cCI6MTcxMTM0NTExMywiaWF0IjoxNzEwNzQwMzEzfQ.AjR9uhC7ezpcNiOGLtUWE8yU3Akpgt7Q3doHt4uxNVI",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJraWQiOiJscnU1ZXFhT2hBRFRKbTJBek1qcmJobHgyeklYV3hjOTBBRmNESXhvckI4PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI5MDJkNTdhOS02NjY4LTRiMjctYTNkMy01ZGEzYmZhYjdjZjMiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmFwLW5vcnRoZWFzdC0xLmFtYXpvbmF3cy5jb21cL2FwLW5vcnRoZWFzdC0xX1llNTVXVG9aNCIsImNvZ25pdG86dXNlcm5hbWUiOiI5MDJkNTdhOS02NjY4LTRiMjctYTNkMy01ZGEzYmZhYjdjZjMiLCJhdWQiOiJwOTBpdnZnYWVlYWxwZG9lYnYyZDBxZGxsIiwiZXZlbnRfaWQiOiJiODZmM2EzZi02NWQ0LTQyY2EtYjZhZS0zYjg3YzA5MjFkNzIiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTcxMTQxOTUzMCwibmFtZSI6IueZu-mMsiIsImV4cCI6MTcxMTQyNjE1MywiaWF0IjoxNzExNDIyNTUzLCJlbWFpbCI6InRpZW50cmFuLmNvZGVjb21wbGV0ZUBnbWFpbC5jb20ifQ.LWTzlSl-F5KIr-2k4B8QXO3HNFdpz3sZJ_QMnLsn__kBHCeLRPpgfMsCkjZbiTL6oiy0h_IQAcMRwy-kNvc7Ajn9wKiQfW2FQjwfcrbV8nx-Tj0aUuKUlLAeRfSwITRZkmtPVoMOKkc2vW8jxsXAvFSlZOcDn5ap5qN4bW1N1z_kVQpQTlzUbaqlsrbeZIrBOZZMscAPW9xVcLtn-jEvTpveNitfTzPSG_4HmIYRVcvKW08SLLGh_2TNNJZAM-7xo18IpvhQBt-CtyW7vjDNTTJqFa6vrWj0jsD3Io51uORp-qvmHXiomV4iCT7HQxhPvYT_YGYXa1JxIyLH30SS5g",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"tinh31@gmail.com\",\n    \"password\" : \"abc123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "history",
+			"item": [
+				{
+					"name": "start",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"spinId\": 50193,\n    \"rate\": \"6.0359%\",\n    \"xu\": \"94,480\",\n    \"time\": \"01:59\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3002/history/start",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"history",
+								"start"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "end",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"spinId\": 50193,\n    \"rate\": \"6.0359%\",\n    \"xu\": \"94,480\",\n    \"people\": \"33008\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3002/history/end",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"history",
+								"end"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"spinId\": 50195,\n    \"rate\": \"6.0359%\",\n    \"xu\": \"94,480\",\n    \"people\": \"33008\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3002/history/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3002",
+							"path": [
+								"history",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

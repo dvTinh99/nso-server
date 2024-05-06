@@ -30,7 +30,7 @@ export default {
     const vxmm = req.body;
     
     let history = {
-      xu: parseInt(vxmm.xuThisGame.replace(/,/g, ""), 10),
+      xu: parseInt(vxmm.xu.replace(/,/g, ""), 10),
       spin_code: vxmm.spinId,
       status: 0,
     };
@@ -38,6 +38,9 @@ export default {
     if (checkExit.length <= 0) {
       let newHistory = await History.create(history);
     }
+
+    setSpinCode(vxmm.spinId);
+    initNewSpin();
 
     res.json({
       message: "create history game",
@@ -173,7 +176,6 @@ export default {
       result : vxmm.result,
       status: 1,
     };
-    console.log("end", history);
     let updateBot = await History.updateBySpinCode(history, vxmm.spinId);
     res.json({
       message: "call end history game",
