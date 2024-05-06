@@ -11,9 +11,9 @@ const wsConnected = new Set();
 var timeInSecs = 120;
 var ticker;
 var random = getRandomInt(1000000000);
-var start = false;
 
-var get13Record = await HistoryRepo.getResultHistory(13);
+// var get13Record = await HistoryRepo.getResultHistory(13);
+var get13Record = [{result : 4, xu : 3}, {result : 4, xu : 3}, {result : 4, xu : 3}, {result : 4, xu : 3},{result : 4, xu : 3} ,{result : 4, xu : 3} ,{result : 4, xu : 3}];
 var historyLastNumber = Array.from(get13Record, (x) => x.result);
 
 var xuThisGame = 0;
@@ -77,9 +77,7 @@ async function tick() {
         }
     }
     if (secs > 0) {
-        if (start) {
-            timeInSecs--;
-        }
+        timeInSecs--;
     } else {
         clearInterval(ticker);
         // startTimer(timeOneGame); // 4 minutes in seconds
@@ -90,16 +88,20 @@ async function tick() {
     var pretty =
         (mins < 10 ? "0" : "") + mins + ":" + (secs < 10 ? "0" : "") + secs;
 
+    let response = JSON.stringify([
+        spinCode,
+        pretty,
+        random,
+        historyLastNumber,
+        xuThisGame,
+        xuPreviousGame,
+    ]);
+
+    console.log('response', response);
+    
     wsConnected.forEach((ws) =>
         ws.send(
-            JSON.stringify([
-                spinCode,
-                pretty,
-                random,
-                historyLastNumber,
-                xuThisGame,
-                xuPreviousGame,
-            ])
+            response
         )
     );
 }
@@ -123,8 +125,15 @@ wss.on("connection", function (ws) {
     ws.on("close", function () { });
 });
 
-global.startTimer = startTimer;
-global.spinCode = spinCode;
-global.initNewSpin = initNewSpin;
+function setSpinCode(num) {
+    spinCode = num;
+}
 
+function stopSpin() {
+    clearInterval(ticker);
+}
+global.startTimer = startTimer;
+global.setSpinCode = setSpinCode;
+global.initNewSpin = initNewSpin;
+global.stopSpin = stopSpin;
 import app from "./api.js";

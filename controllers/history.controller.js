@@ -27,9 +27,25 @@ export default {
   },
   create: async (req, res, next) => {
     console.log('create');
+    const vxmm = req.body;
     
+    let history = {
+      xu: parseInt(vxmm.xuThisGame.replace(/,/g, ""), 10),
+      spin_code: vxmm.spinId,
+      status: 0,
+    };
+    let checkExit = await History.findBySpinCode(vxmm.spinId);
+    if (checkExit.length <= 0) {
+      let newHistory = await History.create(history);
+    }
+
+    res.json({
+      message: "create history game",
+      data: req.body,
+      payload: req.payload,
+    });
+
     // try {
-    //   const vxmm = req.body;
     //   console.log("create vxmm", vxmm);
 
     //   let history = {
@@ -99,7 +115,27 @@ export default {
   },
   start: async (req, res, next) => {
     console.log('start');
-    
+    const vxmm = req.body;
+
+    let checkExit = await History.findBySpinCode(vxmm.spinId);
+    if (checkExit.length <= 0) {
+      let history = {
+        spin_code: vxmm.spinId,
+      };
+      await History.create(history);
+    }
+
+    let [minus, second] = vxmm.time.split(":");
+    let timeInSecs = (parseInt(minus) * 60 + parseInt(second));
+
+    setSpinCode(vxmm.spinId);
+    startTimer(timeInSecs);
+
+    res.json({
+      message: "call start history game",
+      data: req.body,
+      payload: req.payload,
+    });
     // try {
     //   console.log("start");
     //   const vxmm = req.body;
@@ -128,7 +164,22 @@ export default {
   },
   end: async (req, res, next) => {
     console.log('end');
-    
+    stopSpin();
+    const vxmm = req.body;
+    let history = {
+      rate: vxmm.rate,
+      xu: parseInt(vxmm.xu.replace(/,/g, ""), 10),
+      number_people: vxmm.people,
+      result : vxmm.result,
+      status: 1,
+    };
+    console.log("end", history);
+    let updateBot = await History.updateBySpinCode(history, vxmm.spinId);
+    res.json({
+      message: "call end history game",
+      data: req.body,
+      payload: req.payload,
+    });
     // try {
     //   const vxmm = req.body;
     //   let history = {
